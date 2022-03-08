@@ -1,7 +1,3 @@
-variable "access_key" {}
-variable "secret_key" {}
-variable "region" {}
-
 variable "vpc_cidr_block" {
   description = "VPC CIDR ブロックの設定。デフォルト値は`10.0.0.0/16`"
   default = "10.0.0.0/16"
