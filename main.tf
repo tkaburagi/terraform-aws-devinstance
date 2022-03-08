@@ -24,7 +24,7 @@ module "security-group_ssh" {
   source  = "terraform-aws-modules/security-group/aws//modules/ssh"
   version = "4.8.0"
   # insert required variables here
-  name = "${random_string.default.result}-ssh-sg"
+  name = "${var.prefix}-ssh-sg"
   vpc_id = aws_vpc.hashicat.id
 }
 
@@ -32,7 +32,7 @@ module "security-group_http-80" {
   source  = "terraform-aws-modules/security-group/aws//modules/http-80"
   version = "4.8.0"
   # insert required variables here
-  name    = "${random_string.default.result}-http80-sg"
+  name    = "${var.prefix}-http80-sg"
   vpc_id  = aws_vpc.hashicat.id
 }
 
