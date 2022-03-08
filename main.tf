@@ -15,25 +15,19 @@ resource "aws_instance" "hashicat" {
   subnet_id                   = aws_subnet.hashicat.id
   associate_public_ip_address = true
   vpc_security_group_ids      = [
-    module.security-group_ssh.security_group_id,
-    module.security-group_http-80.security_group_id
+    module.security-group_hashicat.security_group_id
   ]
 }
 
-module "security-group_ssh" {
+module "security-group_hashicat" {
   source  = "terraform-aws-modules/security-group/aws//modules/ssh"
   version = "4.8.0"
   # insert required variables here
   name = "${var.prefix}-ssh-sg"
   vpc_id = aws_vpc.hashicat.id
-}
-
-module "security-group_http-80" {
-  source  = "terraform-aws-modules/security-group/aws//modules/http-80"
-  version = "4.8.0"
-  # insert required variables here
-  name    = "${var.prefix}-http80-sg"
-  vpc_id  = aws_vpc.hashicat.id
+  ingress_cidr_blocks = ["0.0.0.0/0"]
+  ingress_rules       = ["ssh-tcp", "http-80-tcp"]
+  egress_rules        = ["all-all"]
 }
 
 resource "aws_internet_gateway" "hashicat" {
